@@ -5,7 +5,8 @@ import java.util.Date;
 
 /**
  *
- * @author Yonathan
+ * @author Yonathan Bohorquez
+ * @author Manuel Bohorquez
  */
 public class Persona implements Serializable{
     private String identificacion;

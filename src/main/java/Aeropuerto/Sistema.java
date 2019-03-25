@@ -9,7 +9,8 @@ import java.util.HashMap;
 
 /**
  *
- * @author Yonathan
+ * @author Yonathan Bohorquez
+ * @author Manuel Bohorquez
  */
 public class Sistema {
     private HashMap<String,Avion> aviones;

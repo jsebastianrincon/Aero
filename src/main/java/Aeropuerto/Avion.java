@@ -5,17 +5,24 @@ import java.util.HashMap;
 
 /**
  *
- * @author Yonathan
+ * @author Yonathan Bohorquez
+ * @author Manuel Bohorquez
  */
 public class Avion implements Serializable{
     private String id;
     private String aerolinea;
-    HashMap<String,Silla>silla;
+    private String categoria;
+    private Double ingreso;
+    HashMap<String,Vip>vip;
+    HashMap<String,General>general;
 
-    public Avion(String id, String aerolinea) {
+    public Avion(String id, String aerolinea, String categoria, Double ingreso) {
         this.id = id;
         this.aerolinea = aerolinea;
-        silla=new HashMap();
+        this.categoria = categoria;
+        this.ingreso = ingreso;
+        vip=new HashMap();
+        general=new HashMap();
     }
 
     public String getId() {
@@ -34,12 +41,36 @@ public class Avion implements Serializable{
         this.aerolinea = aerolinea;
     }
 
-    public HashMap<String, Silla> getSilla() {
-        return silla;
+    public String getCategoria() {
+        return categoria;
     }
 
-    public void setSilla(HashMap<String, Silla> silla) {
-        this.silla = silla;
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
+    public Double getIngreso() {
+        return ingreso;
+    }
+
+    public void setIngreso(Double ingreso) {
+        this.ingreso = ingreso;
+    }
+
+    public HashMap<String, Vip> getVip() {
+        return vip;
+    }
+
+    public void setVip(HashMap<String, Vip> vip) {
+        this.vip = vip;
+    }
+    
+    public HashMap<String, General> getGeneral() {
+        return general;
+    }
+
+    public void setGeneral(HashMap<String, General> general) {
+        this.general = general;
     }
     
     

@@ -2,104 +2,130 @@ package Aeropuerto;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
- * @author Yonathan
+ * @author Yonathan Bohorquez
+ * @author Manuel Bohorquez
  */
 public class PintarAvion {
+    HashMap<String, Avion> avion;
+    Sistema sistema = new Sistema();
+    String concatenadoA = "", concatenadoB = "", concatenadoC = "", concatenadoD = "", concatenadoE = "";
     public PintarAvion(){
-        
+        avion = new HashMap();
     }
     
-    public void pintar(HashMap<String, Silla> sillas){
-        ArrayList listaVip = new ArrayList();
-        ArrayList listaEco = new ArrayList();
-        int vip=0, eco=0;
-        for (Silla s : sillas.values()) {
-            String[] codigoS=s.getId().split("-");
-            if(s.getDisponible()==true && codigoS[0].equals("VIP")){
-                listaVip.add("O");
-                vip++;
-            }else if(s.getDisponible()==true && codigoS[0].equals("ECO")){
-                listaEco.add("o");
-                eco++;
-            }else if(s.getDisponible()==false && codigoS[0].equals("VIP")){
-                listaVip.add("X");
-            }else if(s.getDisponible()==false && codigoS[0].equals("ECO")){
-                listaEco.add("x");
+    public Double pintarVip(){
+        avion = sistema.leerArchivo();
+        Double costoVip=0.0;
+        for (Map.Entry<String,Avion> av :avion.entrySet()) {
+            if(avion.get(av.getKey()).getCategoria().equals("VIP")){
+                for (Vip vi : avion.get(av.getKey()).getVip().values()) {
+                    if(vi.getUbicacion().contains("A")){
+                        concatenadoA = concatenadoA + vi.getEstado();
+                    }
+                    if(vi.getUbicacion().contains("B")){
+                        concatenadoB = concatenadoB + vi.getEstado();
+                    }
+                    costoVip=vi.getPrecio();
+                }
+                System.out.println("Id del avion: "+avion.get(av.getKey()).getId());
+                mostrarAvion("A->"+concatenadoA, "B->"+concatenadoB, "           ", "           ", "           ");
+                concatenadoA="";concatenadoB="";
             }
         }
-        System.out.println("\tSillas disponibles en VIP: "+vip);
-        System.out.println("\tSillas disponibles en Clasico: "+eco);
-        //pintar.pintar(listaVIP, listaECO);
+        return costoVip;
     }
     
-    public void matriz(){
-        String numeros[][] = new String[5][18];
-        for (int h = 0; h < 2; h++) {
-            for (int j = 0; j < 5; j++) {
-                numeros[h][j] = "+";
-            }
-            for (int j = 5; j < 8; j++) {
-                numeros[h][j] = "O";
-            }
-            for (int j = 8; j < 10; j++) {
-                numeros[h][j] = " ";
-            }
-            for (int j = 10; j < 13; j++) {
-                numeros[h][j] = "O";
-            }
-            for (int j = 13; j < 18; j++) {
-                numeros[h][j] = "|";
-            }
-        }
-        for (int h = 2; h < 5; h++){
-            for (int j = 0; j < 8; j++) {
-                numeros[h][j] = "o";
-            }
-            for (int j = 8; j < 10; j++) {
-                numeros[h][j] = " ";
-            }
-            for (int j = 10; j < 18; j++) {
-                numeros[h][j] = "o";
+    public Double pintarClasico(){
+        avion = sistema.leerArchivo();
+        Double costoGeneral=0.0;
+        for (Map.Entry<String,Avion> av :avion.entrySet()) {
+            if(avion.get(av.getKey()).getCategoria().equals("Genereal")){
+                for (General general : avion.get(av.getKey()).getGeneral().values()) {
+                    if(general.getUbicacion().contains("C")){
+                        concatenadoC = concatenadoC + general.getEstado();
+                    }
+                    if(general.getUbicacion().contains("D")){
+                        concatenadoD = concatenadoD + general.getEstado();
+                    }
+                    if(general.getUbicacion().contains("E")){
+                        concatenadoE = concatenadoE + general.getEstado();
+                    }
+                    costoGeneral=general.getPrecio();
+                }
+                System.out.println("Id del avion: "+avion.get(av.getKey()).getId());
+                mostrarAvion("         ", "         ", "C->"+concatenadoC, "D->"+concatenadoD, "E->"+concatenadoE);
+                concatenadoC="";concatenadoD="";concatenadoE="";
             }
         }
-        for (String[] num : numeros) {
-            for (String elem : num) {
-                System.out.print(elem);
+        return costoGeneral;
+    }
+    
+    public Double[] pintarMixto(){
+        avion = sistema.leerArchivo();
+        Double costoVip=0.0, costoGeneral=0.0;
+        for (Map.Entry<String,Avion> av :avion.entrySet()) {
+            if(avion.get(av.getKey()).getCategoria().equals("Mixto")){
+                for (Vip vi : avion.get(av.getKey()).getVip().values()) {
+                    if(vi.getUbicacion().contains("A")){
+                        concatenadoA = concatenadoA + vi.getEstado();
+                    }
+                    if(vi.getUbicacion().contains("B")){
+                        concatenadoB = concatenadoB + vi.getEstado();
+                    }
+                    costoVip=vi.getPrecio();
+                }
+                for (General general : avion.get(av.getKey()).getGeneral().values()) {
+                    if(general.getUbicacion().contains("C")){
+                        concatenadoC = concatenadoC + general.getEstado();
+                    }
+                    if(general.getUbicacion().contains("D")){
+                        concatenadoD = concatenadoD + general.getEstado();
+                    }
+                    if(general.getUbicacion().contains("E")){
+                        concatenadoE = concatenadoE + general.getEstado();
+                    }
+                    costoGeneral=general.getPrecio();
+                }
+                System.out.println("Id del avion: "+avion.get(av.getKey()).getId());
+                mostrarAvion("A->"+concatenadoA, "B->"+concatenadoB, "C->"+concatenadoC, "D->"+concatenadoD, "E->"+concatenadoE);
+                concatenadoA="";concatenadoB="";concatenadoC="";concatenadoD="";concatenadoE="";
             }
-            System.out.print("\n"); // Salto de Línea
         }
-        System.out.println("                                           1111111\n" +
-                "                                12345678  90123456\n" +
-                "                                ||||||||  ||||||||\n" +
-                "                                |||||||NXXN|||||||\n" +
-                "                                ||||||Ko  dK||||||\n" +
-                "                                |||||K||  |oK|||||\n" +
-                "                                ||||Nd||  ||dN||||\n" +
-                "                                ||||0|||  |||0||||\n" +
-                "                                ||||k|||  |||k||||\n" +
-                "                                |||Nd|||  |||xN|||\n" +
-                "                                |||Xo|||  |||dX|||\n" +
-                "                                |||Ko|||  |||oK|||\n" +
-                "                                |||Ko|||  |||oK|||\n" +
-                "                                |||Ko|||  |||oK|||\n" +
-                "                                |||K||||  |||oK|||\n" +
-                "                                |||K||||  ||||K|||\n" +
-                "                                ||Kx||||  ||||xK||\n" +
-                "                               NOd||||||  ||||||d0N\n" +
+        Double[] costo={costoVip, costoGeneral};
+        return costo;
+    }
+    
+    public void mostrarAvion(String a,String b,String c,String d,String e){
+        System.out.println("                                       NXXN\n" +
+                "                                      Ko  dK\n" +
+                "                                     K     oK\n" +
+                "                                    Nd      dN\n" +
+                "                                    0        0\n" +
+                "                                    k        k\n" +
+                "                                   Nd        xN\n" +
+                "                                   Xo        dX\n" +
+                "                                   Ko        oK\n" +
+                "                                   Ko        oK\n" +
+                "                                   Ko        oK\n" +
+                "                                   K         oK\n" +
+                "                                   K         K\n" +
+                "                                  Kx         xK\n" +
+                "                               NOd              d0N\n" +
                 "                         XOOOOko                  okOOO0X\n" +
-                "                         k                              k\n" +
+                "                         k          \033[31m 123456             k\n" +
+                "                        Xd        "+a+"             dK\n" +
+                "                         k        "+b+"             k\n" +
                 "                        Xd                              dK\n" +
-                "                         k                              k\n" +
+                "                         k------------|  |-------------k\n" +
                 "                        Xd                              dK\n" +
-                "                         k                              k\n" +
-                "                        Xd                              dK\n" +
-                "                 Xxlooxd                                  ddoolxX\n" +
-                "                 K                                              K\n" +
-                "                NO                                              ON\n" +
-                "              Xk                                                 okX\n" +
+                "                 Xxlooxd           \033[31m 12345678             ddoolxX\n" +
+                "                 K               "+c+"                   K\n" +
+                "                NO               "+d+"                   ON\n" +
+                "              Xk                 "+e+"                    okX\n" +
                 "           N0x                    xd          dxo                   x0N\n" +
                 "         XOo                 oO0k0 0          0 0kOOd                 oOX\n" +
                 "      N0x              o d0KOK     0          0     KOK0d o              d0N\n" +
@@ -115,10 +141,10 @@ public class PintarAvion {
                 "                                     Ko    oK\n" +
                 "                                     Xd    dX\n" +
                 "                                   X0x      dOX\n" +
-                "                                NKxo          ox0N\n" +
-                "                               Xx       oo       dX\n" +
+                "                                NKxo    00    ox0N\n" +
+                "                               Xx      0000      dX\n" +
                 "                               KdoxkOKX0kk0XKOkxodK\n" +
-                "                                ||     ||||     ||");
+                "                                ||     ||||     ||\n\n\n\n");
     }
     
 }
