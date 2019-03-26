@@ -406,6 +406,8 @@ public class Principal implements Serializable{
                 }
                 System.out.println("Total Ingresos del avion es $"+aviones.get(idAvion).getIngreso()+" pesos");
                 aviones.remove(idAvion);
+                sistema.guardarArchivo(aviones);
+                System.out.println("Avión despegó.");
             }else if(aviones.containsKey(idAvion) && aviones.get(idAvion).getCategoria().equals("Genereal")){
                 System.out.println("CLIENTES GENERAL");
                 for(General ge : aviones.get(idAvion).getGeneral().values()){
@@ -420,7 +422,9 @@ public class Principal implements Serializable{
                 }
                 System.out.println("Total Ingresos del avion es $"+aviones.get(idAvion).getIngreso()+" pesos");
                 aviones.remove(idAvion);
-            }else{
+                sistema.guardarArchivo(aviones);
+                System.out.println("Avión despegó.");
+            }else if(aviones.containsKey(idAvion) && aviones.get(idAvion).getCategoria().equals("Mixto")){
                 System.out.println("CLIENTES VIP");
                 for(Vip vi : aviones.get(idAvion).getVip().values()){
                     if (vi.getEstado().contains("X")) {
@@ -445,6 +449,8 @@ public class Principal implements Serializable{
                 }
                 System.out.println("Total Ingresos del avion es $"+aviones.get(idAvion).getIngreso()+" pesos");
                 aviones.remove(idAvion);
+                sistema.guardarArchivo(aviones);
+                System.out.println("Avión despegó.");
             }
         }catch(IOException e){
             System.out.println("Error: "+e.getMessage());
