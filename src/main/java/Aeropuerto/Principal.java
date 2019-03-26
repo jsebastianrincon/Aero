@@ -374,61 +374,65 @@ public class Principal implements Serializable{
     //Metodo donde se efectúa la venta.
     public void compraCliente(String idCliente, Double costoVip, Double costoGeneral) {
         try{
-            boolean existe=false, ocupado=false;
-            do{
-                System.out.println("Digite el Id del Avión en el que desea Viajar");
-                String idAvion=entradaDatos.readLine();
-                Persona cliente;
-                String nombre=personas.get(idCliente).getNombre();
-                String apellido = personas.get(idCliente).getApellido();
-                Date fechaN = personas.get(idCliente).getFechaNacimiento();
-                if(aviones.containsKey(idAvion)){
-                    existe=true;
-                    String silla="";
-                    do{
-                        System.out.println("Digite la posicion de la silla que desea ocupar.");
-                        silla=entradaDatos.readLine();
-                        if ((silla.contains("A") || silla.contains("B")) && aviones.get(idAvion).getVip().containsKey(silla)){
-                            if(aviones.get(idAvion).getVip().get(silla).getEstado().contains("O")){
-                                ocupado=true;
-                                Vip temp = aviones.get(idAvion).getVip().get(silla);
-                                cliente = new Persona(idCliente, nombre, apellido, fechaN);
-                                temp.getPersona().put(idCliente, cliente);
-                                temp.setEstado("X");
-                                acumulado=acumulado+costoVip;
-                                aviones.get(idAvion).setIngreso(acumulado);
-                                sistema.guardarArchivo(aviones);
-                                System.out.println("Venta Tiquete VIP realizada.");
+            if(aviones.isEmpty()){
+                System.out.println("No hay aviones registrados en el sistema.");
+            }else{
+                boolean existe=false, ocupado=false;
+                do{
+                    System.out.println("Digite el Id del Avión en el que desea Viajar");
+                    String idAvion=entradaDatos.readLine();
+                    Persona cliente;
+                    String nombre=personas.get(idCliente).getNombre();
+                    String apellido = personas.get(idCliente).getApellido();
+                    Date fechaN = personas.get(idCliente).getFechaNacimiento();
+                    if(aviones.containsKey(idAvion)){
+                        existe=true;
+                        String silla="";
+                        do{
+                            System.out.println("Digite la posicion de la silla que desea ocupar.");
+                            silla=entradaDatos.readLine();
+                            if ((silla.contains("A") || silla.contains("B")) && aviones.get(idAvion).getVip().containsKey(silla)){
+                                if(aviones.get(idAvion).getVip().get(silla).getEstado().contains("O")){
+                                    ocupado=true;
+                                    Vip temp = aviones.get(idAvion).getVip().get(silla);
+                                    cliente = new Persona(idCliente, nombre, apellido, fechaN);
+                                    temp.getPersona().put(idCliente, cliente);
+                                    temp.setEstado("X");
+                                    acumulado=acumulado+costoVip;
+                                    aviones.get(idAvion).setIngreso(acumulado);
+                                    sistema.guardarArchivo(aviones);
+                                    System.out.println("Venta Tiquete VIP realizada.");
+                                }else{
+                                    ocupado=false;
+                                    System.out.println("Silla ocupada! Por favor Seleccione otra.");
+                                }
+                            }else if ((silla.contains("C") || silla.contains("D") || silla.contains("E")) && aviones.get(idAvion).getGeneral().containsKey(silla)) {
+                                if(aviones.get(idAvion).getGeneral().get(silla).getEstado().contains("o")){
+                                    ocupado=true;
+                                    General temp = aviones.get(idAvion).getGeneral().get(silla);
+                                    cliente = new Persona(idCliente, nombre, apellido, fechaN);
+                                    temp.getPersona().put(idCliente, cliente);
+                                    temp.setEstado("x");
+                                    acumulado=acumulado+costoGeneral;
+                                    aviones.get(idAvion).setIngreso(acumulado);
+                                    sistema.guardarArchivo(aviones);
+                                    System.out.println("Venta Tiquete General realizada.");
+                                }
+                                else{
+                                    ocupado=false;
+                                    System.out.println("Silla ocupada! Por favor Seleccione otra.");
+                                }
                             }else{
-                                ocupado=false;
-                                System.out.println("Silla ocupada! Por favor Seleccione otra.");
+                                System.out.println("La ubicacion no es correcta o la digitó mal.");
                             }
-                        }else if ((silla.contains("C") || silla.contains("D") || silla.contains("E")) && aviones.get(idAvion).getGeneral().containsKey(silla)) {
-                            if(aviones.get(idAvion).getGeneral().get(silla).getEstado().contains("o")){
-                                ocupado=true;
-                                General temp = aviones.get(idAvion).getGeneral().get(silla);
-                                cliente = new Persona(idCliente, nombre, apellido, fechaN);
-                                temp.getPersona().put(idCliente, cliente);
-                                temp.setEstado("x");
-                                acumulado=acumulado+costoGeneral;
-                                aviones.get(idAvion).setIngreso(acumulado);
-                                sistema.guardarArchivo(aviones);
-                                System.out.println("Venta Tiquete General realizada.");
-                            }
-                            else{
-                                ocupado=false;
-                                System.out.println("Silla ocupada! Por favor Seleccione otra.");
-                            }
-                        }else{
-                            System.out.println("La ubicacion no es correcta o la digitó mal.");
-                        }
-                    }while(!(aviones.get(idAvion).getGeneral().containsKey(silla) || 
-                            aviones.get(idAvion).getVip().containsKey(silla)) || ocupado == false);
-                }else{
-                    existe=false;
-                    System.out.println("Id erroneo o no está registrado en el Sistema.");
-                }
-            }while(existe==false);
+                        }while(!(aviones.get(idAvion).getGeneral().containsKey(silla) ||
+                                aviones.get(idAvion).getVip().containsKey(silla)) || ocupado == false);
+                    }else{
+                        existe=false;
+                        System.out.println("Id erroneo o no está registrado en el Sistema.");
+                    }
+                }while(existe==false);
+            }
         }catch(IOException e){
             System.out.println("Error: "+e.getMessage());
         }
