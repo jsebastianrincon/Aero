@@ -439,77 +439,81 @@ public class Principal implements Serializable{
             boolean despego=false;
             verDatos();
             aviones = sistema.leerArchivo();
-            do{
-                System.out.println("Digite el codigo del avion que va a Despegar:");
-                String idAvion=entradaDatos.readLine();
-                if(aviones.containsKey(idAvion) && aviones.get(idAvion).getCategoria().equals("VIP")){
-                    System.out.println("CLIENTES VIP");
-                    for(Vip vi : aviones.get(idAvion).getVip().values()){
-                        if (vi.getEstado().contains("X")) {
-                            System.out.println("\n\n"+vi.getUbicacion());
-                            for (Persona pe : vi.getPersona().values()) {
-                                System.out.println(pe.getIdentificacion());
-                                System.out.println(pe.getNombre()+" "+pe.getApellido());
-                                System.out.println(pe.getFechaNacimiento());
+            if(aviones.isEmpty()){
+                System.out.println("No hay aviones registrados en el sistema.");
+            }else{
+                do{
+                    System.out.println("Digite el codigo del avion que va a Despegar:");
+                    String idAvion=entradaDatos.readLine();
+                    if(aviones.containsKey(idAvion) && aviones.get(idAvion).getCategoria().equals("VIP")){
+                        System.out.println("CLIENTES VIP");
+                        for(Vip vi : aviones.get(idAvion).getVip().values()){
+                            if (vi.getEstado().contains("X")) {
+                                System.out.println("\n\n"+vi.getUbicacion());
+                                for (Persona pe : vi.getPersona().values()) {
+                                    System.out.println(pe.getIdentificacion());
+                                    System.out.println(pe.getNombre()+" "+pe.getApellido());
+                                    System.out.println(pe.getFechaNacimiento());
+                                }
                             }
                         }
-                    }
-                    System.out.println("Total Ingresos del avion es $"+aviones.get(idAvion).getIngreso()+" pesos");
-                    aviones.remove(idAvion);
-                    sistema.guardarArchivo(aviones);
-                    despego=true;
-                    System.out.println("Avión despegó.");
-                }else if(aviones.containsKey(idAvion) && aviones.get(idAvion).getCategoria().equals("Genereal")){
-                    System.out.println("CLIENTES GENERAL");
-                    for(General ge : aviones.get(idAvion).getGeneral().values()){
-                        if (ge.getEstado().contains("x")) {
-                            System.out.println(ge.getUbicacion());
-                            for (Persona pe : ge.getPersona().values()) {
-                                System.out.println(pe.getIdentificacion());
-                                System.out.println(pe.getNombre()+pe.getApellido());
-                                System.out.println(pe.getFechaNacimiento());
+                        System.out.println("Total Ingresos del avion es $"+aviones.get(idAvion).getIngreso()+" pesos");
+                        aviones.remove(idAvion);
+                        sistema.guardarArchivo(aviones);
+                        despego=true;
+                        System.out.println("Avión despegó.");
+                    }else if(aviones.containsKey(idAvion) && aviones.get(idAvion).getCategoria().equals("Genereal")){
+                        System.out.println("CLIENTES GENERAL");
+                        for(General ge : aviones.get(idAvion).getGeneral().values()){
+                            if (ge.getEstado().contains("x")) {
+                                System.out.println(ge.getUbicacion());
+                                for (Persona pe : ge.getPersona().values()) {
+                                    System.out.println(pe.getIdentificacion());
+                                    System.out.println(pe.getNombre()+pe.getApellido());
+                                    System.out.println(pe.getFechaNacimiento());
+                                }
                             }
                         }
-                    }
-                    System.out.println("Total Ingresos del avion es $"+aviones.get(idAvion).getIngreso()+" pesos");
-                    aviones.remove(idAvion);
-                    sistema.guardarArchivo(aviones);
-                    despego=true;
-                    System.out.println("Avión despegó.");
-                }else if(aviones.containsKey(idAvion) && aviones.get(idAvion).getCategoria().equals("Mixto")){
-                    System.out.println("CLIENTES VIP");
-                    for(Vip vi : aviones.get(idAvion).getVip().values()){
-                        if (vi.getEstado().contains("X")) {
-                            System.out.println("\n\n"+vi.getUbicacion());
-                            for (Persona pe : vi.getPersona().values()) {
-                                System.out.println(pe.getIdentificacion());
-                                System.out.println(pe.getNombre()+" "+pe.getApellido());
-                                System.out.println(pe.getFechaNacimiento());
+                        System.out.println("Total Ingresos del avion es $"+aviones.get(idAvion).getIngreso()+" pesos");
+                        aviones.remove(idAvion);
+                        sistema.guardarArchivo(aviones);
+                        despego=true;
+                        System.out.println("Avión despegó.");
+                    }else if(aviones.containsKey(idAvion) && aviones.get(idAvion).getCategoria().equals("Mixto")){
+                        System.out.println("CLIENTES VIP");
+                        for(Vip vi : aviones.get(idAvion).getVip().values()){
+                            if (vi.getEstado().contains("X")) {
+                                System.out.println("\n\n"+vi.getUbicacion());
+                                for (Persona pe : vi.getPersona().values()) {
+                                    System.out.println(pe.getIdentificacion());
+                                    System.out.println(pe.getNombre()+" "+pe.getApellido());
+                                    System.out.println(pe.getFechaNacimiento());
+                                }
                             }
                         }
-                    }
-                    System.out.println("CLIENTES GENERAL");
-                    for(General ge : aviones.get(idAvion).getGeneral().values()){
-                        if (ge.getEstado().contains("x")) {
-                            System.out.println(ge.getUbicacion());
-                            for (Persona pe : ge.getPersona().values()) {
-                                System.out.println(pe.getIdentificacion());
-                                System.out.println(pe.getNombre()+" "+pe.getApellido());
-                                System.out.println(pe.getFechaNacimiento());
+                        System.out.println("CLIENTES GENERAL");
+                        for(General ge : aviones.get(idAvion).getGeneral().values()){
+                            if (ge.getEstado().contains("x")) {
+                                System.out.println(ge.getUbicacion());
+                                for (Persona pe : ge.getPersona().values()) {
+                                    System.out.println(pe.getIdentificacion());
+                                    System.out.println(pe.getNombre()+" "+pe.getApellido());
+                                    System.out.println(pe.getFechaNacimiento());
+                                }
                             }
                         }
+                        System.out.println("Total Ingresos del avion es $"+aviones.get(idAvion).getIngreso()+" pesos");
+                        aviones.remove(idAvion);
+                        sistema.guardarArchivo(aviones);
+                        despego=true;
+                        System.out.println("Avión despegó.");
                     }
-                    System.out.println("Total Ingresos del avion es $"+aviones.get(idAvion).getIngreso()+" pesos");
-                    aviones.remove(idAvion);
-                    sistema.guardarArchivo(aviones);
-                    despego=true;
-                    System.out.println("Avión despegó.");
-                }
-                else{
-                    despego=false;
-                    System.out.println("El id del avión es erroneo o no está registrado en el Sistema.");
-                }
-            }while(despego==false);
+                    else{
+                        despego=false;
+                        System.out.println("El id del avión es erroneo o no está registrado en el Sistema.");
+                    }
+                }while(despego==false);
+            }
         }catch(IOException e){
             System.out.println("Error: "+e.getMessage());
         }
