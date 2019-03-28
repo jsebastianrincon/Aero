@@ -5,22 +5,25 @@ import java.util.HashMap;
 
 /**
  *
- * @author Yonathan Bohorquez
- * @author Manuel Bohorquez
+ * @author Juan Sebastian
  */
+
+/*Clase para manejar la categoria general del vuelo con la respectiva ubicacion,estado y precio*/
 public class General implements Serializable{
     private String ubicacion;
     private String estado;
     private Double precio;
     HashMap<String,Persona>persona;
 
+    
+/* Clase general para hacer la referenciacion de los parametros con la ubicacion en el avion,el estado y precio*/
     public General(String ubicacion, String estado, Double precio) {
         this.ubicacion = ubicacion;
         this.estado = estado;
         this.precio = precio;
         persona = new HashMap();
     }
-
+/* Getters Y Setters para cada uno de los parametros (Estado y ubicacion) y el mapa de las personaas y el avion*/
     public String getUbicacion() {
         return ubicacion;
     }

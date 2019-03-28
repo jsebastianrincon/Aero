@@ -12,9 +12,11 @@ import java.util.Map;
 
 /**
  *
- * @author Yonathan Bohorquez
- * @author Manuel Bohorquez
+ * @author Juan Sebastian
  */
+
+/*Clase principal donde se realizara toda la logica del proyecto*/
+
 public class Principal implements Serializable{
     public BufferedReader entradaDatos=new BufferedReader(new InputStreamReader (System.in));
     private HashMap<String,Avion> aviones;
@@ -26,59 +28,53 @@ public class Principal implements Serializable{
         personas=new HashMap();
     }
     
-    //Metodo del menú principal.
+    /*Menú principal */
     public void Menu(){
         try{
             String opcion = "";
             do{
-                //Carga los datos del Archivo Aerolinea
+                //Carga Datos
                 aviones = sistema.leerArchivo();
-                //Menú principal
-                System.out.println("+ - - - - - - - - - - - - - - - - - - +");
-                System.out.println("|   Bienvenido a Aeropuerto UdeC.     |");
-                System.out.println("+ - - - - - - - - - - - - - - - - - - +");
-                System.out.println("|                                     |");
-                System.out.println("|   1. Agregar Avion.                 |");
-                System.out.println("|   2. Vender Tiquete.                |");
-                System.out.println("|   3. Despegar Avión.                |");
-                System.out.println("|   4. Ver Datos Aviones.             |");
-                System.out.println("|                                     |");
-                System.out.println("|   0. Salir.                         |");
-                System.out.println("+ - - - - - - - - - - - - - - - - - - +");
+                //Menú 
+                System.out.println("1. Agregar Avion ");
+                System.out.println("2. Vender Tiquete ");
+                System.out.println("3. Despegar Avión ");
+                System.out.println("4. Datos Aviones ");
+                System.out.println("5. Salir ");
                 opcion = entradaDatos.readLine();
                 
                 switch(opcion){
                     case"1":
-                        //Solicita un codigo para el avión para verificar que no exista.
-                        System.out.println("Datos del Avión");
-                        System.out.println("Codigo:");
+                        //Ingresa id para el avión para verificar que no exista.
+                        System.out.println("Datos");
+                        System.out.println("Id:");
                         String idAvion=entradaDatos.readLine();
                         crearAvion(idAvion);
                         sistema.guardarArchivo(aviones);
                         break;
                     case"2":
-                        //Dolicita la cedula del cliente para verificar que no exista.
+                        //Ingresa cedula del cliente
                         System.out.println("Cedula Cliente:");
                         String idCliente=entradaDatos.readLine();
                         venderTiquete(idCliente);
                         break;
                     case"3":
-                        //Metodo para despegar
+                        //Metodo despegar
                         despegarAvion();
                         break;
                     case"4":
-                        //Ver datos de los avión
+                        //Ver Informacion avion
                         verDatos();
                         break;
-                    case"0":
-                        //Finaliza el programa
+                    case"5":
+                        //Fin
                         System.exit(0);
                         break;
                     default:
-                        System.out.println("Opción no válida...");
+                        System.out.println("Opción Incorrecta");
                         break;
                 }
-            }while(!opcion.equals("0"));
+            }while(!opcion.equals("5"));
         }catch(IOException e){
             System.out.println("Error: "+e.getMessage());
         }
@@ -86,39 +82,34 @@ public class Principal implements Serializable{
     
     //Metodo para crear aviones.
     public void crearAvion(String id){
-        //Recibimos como parametro el id del avion para verificar que no exista
-        //y si no existe, crea el avión.
+        //Se asigna el parametro id para verificar que no exista el avion
         try{
             if(aviones.containsKey(id)){
-                System.out.println("El avión ya está registrado.");
+                System.out.println("Avion existente");
             }else{
                 System.out.println("Aerolinea:");
                 String aerolinea=entradaDatos.readLine();
                 agregarSillas(id, aerolinea);
-                System.out.println("Avión Registrado en el sistema");
+                System.out.println("Avión Registrado exitosamente");
             }
         }catch(IOException e){
             System.out.println("Error: "+e.getMessage());
         }
     }
     
-    //Metodo para agregar Sillas al avión.
+    //Metodo para agregar puestos al avión.
     public void agregarSillas(String idAvion, String aerolinea){
-        //Recibimos como parametros el id del avion, y la aerolinea
         try{
             Avion avion;
             String categoria="";
             Double precioVip, precioEco;
             do{
-                //Mostramos un submenú para seleccionar el tipo de avión
-                System.out.println("+ - - - - - - - - - - - - +");
-                System.out.println("|  Categoría del Avión.   |");
-                System.out.println("+ - - - - - - - - - - - - +");
-                System.out.println("|                         |");
-                System.out.println("|   1. VIP.               |");
-                System.out.println("|   2. General.           |");
-                System.out.println("|   3. Mixto.             |");
-                System.out.println("+ - - - - - - - - - - - - +");
+                //Menu para seleccionar la categoria
+                
+                System.out.println("Categoría");
+                System.out.println("1.VIP");
+                System.out.println("2.General");
+                System.out.println("3.Mixto");
                 categoria=entradaDatos.readLine();
                 int cantidadUno=1, cantidadDos=1;
                 boolean esDouble;
@@ -130,7 +121,7 @@ public class Principal implements Serializable{
                         esDouble=false;
                         do{
                             try{
-                                System.out.println("Precio Vuelo VIP en la aerolinea "+aerolinea+":");
+                                System.out.println("Costo silla VIP en la aerolinea "+aerolinea+":");
                                 precioVip=Double.parseDouble(entradaDatos.readLine());
                                 esDouble=true;
                                 for(int i=1;i<=12;i++){
@@ -149,12 +140,12 @@ public class Principal implements Serializable{
                         }while(!esDouble);
                         break;
                     case"2":
-                        avion=new Avion(idAvion, aerolinea, "Genereal", 0.0);
+                        avion=new Avion(idAvion, aerolinea, "General", 0.0);
                         aviones.put(idAvion, avion);
                         esDouble=false;
                         do{
                             try{
-                                System.out.println("Precio Vuelo General en la aerolinea "+aerolinea+":");
+                                System.out.println("Costo silla General en la aerolinea  "+aerolinea+":");
                                 precioEco=Double.parseDouble(entradaDatos.readLine());
                                 esDouble=true;
                                 for(int i=1;i<=24;i++){
@@ -182,9 +173,9 @@ public class Principal implements Serializable{
                         esDouble=false;
                         do{
                             try{
-                                System.out.println("Precio Vuelo VIP en la aerolinea "+aerolinea+":");
+                                System.out.println("Costo silla VIP en la aerolinea  "+aerolinea+":");
                                 precioVip=Double.parseDouble(entradaDatos.readLine());
-                                System.out.println("Precio Vuelo Clasico en la aerolinea "+aerolinea+":");
+                                System.out.println("Costo silla General en la aerolinea  "+aerolinea+":");
                                 precioEco=Double.parseDouble(entradaDatos.readLine());
                                 esDouble=true;
                                 for(int i=1;i<=12;i++){
@@ -218,7 +209,7 @@ public class Principal implements Serializable{
                         }while(!esDouble);
                         break;
                     default:
-                        System.out.println("Opcion no valida...");
+                        System.out.println("Opcion Incorrecta");
                         break;
                 }
             }while(!(categoria.equals("1") || categoria.equals("2") || categoria.equals("3")));
@@ -227,21 +218,21 @@ public class Principal implements Serializable{
         }
     }
     
-    //Metodo para agregar la silla general al hashmap del avion.
+    //Metodo para agregar la silla general al avion.
     public void crearSillaGeneral(String id, String idAvion, Double precio){
         General sillaGeneral=new General(id, "o", precio);
         if(aviones.get(idAvion).getGeneral().containsKey(id)){
-            System.out.println("La Silla ya está Registrada");
+            System.out.println("Puesto Registrado");
         }else{
             aviones.get(idAvion).getGeneral().put(id, sillaGeneral);
         }
     }
     
-    //Metodo para agregar la Silla VIP al hashmap del avion.
+    //Metodo para agregar la silla VIP al avion.
     public void crearSillaVip(String id, String idAvion, Double precio){
         Vip sillaVip=new Vip(id, "O", precio);
         if(aviones.get(idAvion).getVip().containsKey(id)){
-            System.out.println("La Silla ya está Registrada");
+            System.out.println("Puesto Registrado");
         }else{
             aviones.get(idAvion).getVip().put(id, sillaVip);
         }
@@ -255,46 +246,46 @@ public class Principal implements Serializable{
             personas = sistema.leerArchivoCliente();
             if(personas.containsKey(id)){
                 do{
-                    System.out.println("+ - - - - - - - - - - - - +");
-                    System.out.println("|  Categoría del Avión.   |");
-                    System.out.println("+ - - - - - - - - - - - - +");
-                    System.out.println("|                         |");
-                    System.out.println("|   1. VIP.               |");
-                    System.out.println("|   2. General.           |");
-                    System.out.println("|   3. Mixto.             |");
-                    System.out.println("+ - - - - - - - - - - - - +");
+                    
+                    System.out.println("Categoría");
+                    System.out.println("1.VIP");
+                    System.out.println("2.General");
+                    System.out.println("3.Mixto");
                     categoria=entradaDatos.readLine();
                     Double costoVip=0.0, costoGeneral=0.0;
                     switch(categoria){
                         case"1":
                             costoVip=pintar.pintarVip();
-                            System.out.println("Silla VIP tiene un costo de $"+costoVip+" Pesos");
+                            System.out.println("Precio puesto VIP $"+costoVip);
                             compraCliente(id, costoVip, 0.0);
+                            pintar.pintarVip();
                             break;
                         case"2":
                             costoGeneral=pintar.pintarClasico();
-                            System.out.println("Silla General tiene un costo de $"+costoGeneral+" Pesos");
+                            System.out.println("Precio puesto General"+costoGeneral);
                             compraCliente(id, 0.0, costoGeneral);
+                            pintar.pintarClasico();
                             break;
                         case"3":
                             Double[] costo = pintar.pintarMixto();
                             costoVip=costo[0];
                             costoGeneral=costo[1];
-                            System.out.println("Silla VIP tiene un costo de $"+costoVip+" Pesos");
-                            System.out.println("Silla General tiene un costo de $"+costoGeneral+" Pesos");
+                            System.out.println("Precio puesto VIP"+costoVip);
+                            System.out.println("Precio puesto General"+costoGeneral);
                             compraCliente(id, costoVip, costoGeneral);
+                            pintar.pintarMixto();
                             break;
                         default:
-                            System.out.println("Digite una opcion correcta...");
+                            System.out.println("Opcion invalida");
                             break;
                     }
                 }while(!(categoria.equals("1") || categoria.equals("2") || categoria.equals("3")));
             }else{
-                System.out.println("El cliente no está registrado en el sistema.");
-                System.out.println("Desea registrar el cliente con el id "+id+"? (s/n)");
+                System.out.println("Cliente inexistente");
+                System.out.println("Desea registrar el cliente nuevo "+id+"? (s/n)");
                 String eleccion = entradaDatos.readLine();
                 if(eleccion.equals("s") || eleccion.equals("S")){
-                    System.out.println("Datos del Cliente.");
+                    System.out.println("Cliente");
                     System.out.println("Nombre:");
                     String nombre = entradaDatos.readLine();
                     System.out.println("Apellido:");
@@ -302,26 +293,26 @@ public class Principal implements Serializable{
                     Date testDate = null, fechaA = new Date();
                     System.out.println("Fecha de nacimiento:");
                     do{
-                        System.out.println("Introduzca la fecha con formato dd/mm/yyyy");
+                        System.out.println("Introduzca fecha dd/mm/aaaa");
                         String fecha = entradaDatos.readLine();
                         SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
                         String date = fecha;
                         try{
                             testDate = df.parse(date);
                             if (!df.format(testDate).equals(date) || (testDate.compareTo(fechaA) >= 0)){
-                                System.out.println("Fecha no válida!!");
+                                System.out.println("Fecha Incorrecta");
                                 testDate=null;
                             } else {
                                 crearCliente(id, nombre, apellido, testDate);
                                 sistema.guardarArchivoCliente(personas);
                                 venderTiquete(id);
                             }
-                        } catch (ParseException e){ System.out.println("Fecha no válida!!");}
+                        } catch (ParseException e){ System.out.println("Fecha Incorrecta");}
                     }while(testDate==null);
                 }else if(eleccion.equals("n") || eleccion.equals("N")){
-                    System.out.println("Volviendo al menu principal.");
+                    System.out.println("Opcion Incorrecta");
                 }else{
-                    System.out.println("Opcion no valida, regresando al menú principal.");
+                    System.out.println("Opcion Incorrecta");
                 }
             }
         }catch(IOException e){
@@ -375,11 +366,11 @@ public class Principal implements Serializable{
     public void compraCliente(String idCliente, Double costoVip, Double costoGeneral) {
         try{
             if(aviones.isEmpty()){
-                System.out.println("No hay aviones registrados en el sistema.");
+                System.out.println("No hay aviones registrados");
             }else{
                 boolean existe=false, ocupado=false;
                 do{
-                    System.out.println("Digite el Id del Avión en el que desea Viajar");
+                    System.out.println("Ingrese el Id del Avión");
                     String idAvion=entradaDatos.readLine();
                     Persona cliente;
                     String nombre=personas.get(idCliente).getNombre();
@@ -389,7 +380,7 @@ public class Principal implements Serializable{
                         existe=true;
                         String silla="";
                         do{
-                            System.out.println("Digite la posicion de la silla que desea ocupar.");
+                            System.out.println("Ingrese Posicion");
                             silla=entradaDatos.readLine();
                             if ((silla.contains("A") || silla.contains("B")) && aviones.get(idAvion).getVip().containsKey(silla)){
                                 if(aviones.get(idAvion).getVip().get(silla).getEstado().contains("O")){
@@ -401,10 +392,10 @@ public class Principal implements Serializable{
                                     acumulado=acumulado+costoVip;
                                     aviones.get(idAvion).setIngreso(acumulado);
                                     sistema.guardarArchivo(aviones);
-                                    System.out.println("Venta Tiquete VIP realizada.");
+                                    System.out.println("Venta VIP correcta");
                                 }else{
                                     ocupado=false;
-                                    System.out.println("Silla ocupada! Por favor Seleccione otra.");
+                                    System.out.println("Puesto en uso! Por favor Seleccione otro");
                                 }
                             }else if ((silla.contains("C") || silla.contains("D") || silla.contains("E")) && aviones.get(idAvion).getGeneral().containsKey(silla)) {
                                 if(aviones.get(idAvion).getGeneral().get(silla).getEstado().contains("o")){
@@ -416,20 +407,20 @@ public class Principal implements Serializable{
                                     acumulado=acumulado+costoGeneral;
                                     aviones.get(idAvion).setIngreso(acumulado);
                                     sistema.guardarArchivo(aviones);
-                                    System.out.println("Venta Tiquete General realizada.");
+                                    System.out.println("Venta General correcta");
                                 }
                                 else{
                                     ocupado=false;
-                                    System.out.println("Silla ocupada! Por favor Seleccione otra.");
+                                    System.out.println("Puesto en uso! Por favor Seleccione otro");
                                 }
                             }else{
-                                System.out.println("La ubicacion no es correcta o la digitó mal.");
+                                System.out.println("La ubicacion incorrecta");
                             }
                         }while(!(aviones.get(idAvion).getGeneral().containsKey(silla) ||
                                 aviones.get(idAvion).getVip().containsKey(silla)) || ocupado == false);
                     }else{
                         existe=false;
-                        System.out.println("Id erroneo o no está registrado en el Sistema.");
+                        System.out.println("Id Incorrecto");
                     }
                 }while(existe==false);
             }
@@ -444,10 +435,10 @@ public class Principal implements Serializable{
             verDatos();
             aviones = sistema.leerArchivo();
             if(aviones.isEmpty()){
-                System.out.println("No hay aviones registrados en el sistema.");
+                System.out.println("Aviones Inexistentes");
             }else{
                 do{
-                    System.out.println("Digite el codigo del avion que va a Despegar:");
+                    System.out.println("Codigo del avion: ");
                     String idAvion=entradaDatos.readLine();
                     if(aviones.containsKey(idAvion) && aviones.get(idAvion).getCategoria().equals("VIP")){
                         System.out.println("CLIENTES VIP");
@@ -461,11 +452,11 @@ public class Principal implements Serializable{
                                 }
                             }
                         }
-                        System.out.println("Total Ingresos del avion es $"+aviones.get(idAvion).getIngreso()+" pesos");
+                        System.out.println("Ingresos del avion:  $"+aviones.get(idAvion).getIngreso()+" pesos");
                         aviones.remove(idAvion);
                         sistema.guardarArchivo(aviones);
                         despego=true;
-                        System.out.println("Avión despegó.");
+                        System.out.println("Despegó.");
                     }else if(aviones.containsKey(idAvion) && aviones.get(idAvion).getCategoria().equals("Genereal")){
                         System.out.println("CLIENTES GENERAL");
                         for(General ge : aviones.get(idAvion).getGeneral().values()){
@@ -478,11 +469,11 @@ public class Principal implements Serializable{
                                 }
                             }
                         }
-                        System.out.println("Total Ingresos del avion es $"+aviones.get(idAvion).getIngreso()+" pesos");
+                        System.out.println("Ingresos del avion:  $"+aviones.get(idAvion).getIngreso()+" pesos");
                         aviones.remove(idAvion);
                         sistema.guardarArchivo(aviones);
                         despego=true;
-                        System.out.println("Avión despegó.");
+                        System.out.println("Despegó.");
                     }else if(aviones.containsKey(idAvion) && aviones.get(idAvion).getCategoria().equals("Mixto")){
                         System.out.println("CLIENTES VIP");
                         for(Vip vi : aviones.get(idAvion).getVip().values()){
@@ -506,15 +497,15 @@ public class Principal implements Serializable{
                                 }
                             }
                         }
-                        System.out.println("Total Ingresos del avion es $"+aviones.get(idAvion).getIngreso()+" pesos");
+                        System.out.println("Ingresos del avion es $"+aviones.get(idAvion).getIngreso()+" pesos");
                         aviones.remove(idAvion);
                         sistema.guardarArchivo(aviones);
                         despego=true;
-                        System.out.println("Avión despegó.");
+                        System.out.println("Despegó.");
                     }
                     else{
                         despego=false;
-                        System.out.println("El id del avión es erroneo o no está registrado en el Sistema.");
+                        System.out.println("Avion Inexistente");
                     }
                 }while(despego==false);
             }

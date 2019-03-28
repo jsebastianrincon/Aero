@@ -3,8 +3,7 @@ package Aeropuerto;
 
 /**
  *
- * @author Yonathan Bohorquez
- * @author Manuel Bohorquez
+ * @author Juan Sebastian
  */
 public class Main {
     public static void main(String[] args){

@@ -5,9 +5,10 @@ import java.util.HashMap;
 
 /**
  *
- * @author Yonathan Bohorquez
- * @author Manuel Bohorquez
+ * @author Juan Sebastian
  */
+
+/* Clase para guardar los atributos del avion*/
 public class Avion implements Serializable{
     private String id;
     private String aerolinea;
@@ -16,6 +17,7 @@ public class Avion implements Serializable{
     HashMap<String,Vip>vip;
     HashMap<String,General>general;
 
+    /* Clase avion para hacer la referenciacion de los parametros */
     public Avion(String id, String aerolinea, String categoria, Double ingreso) {
         this.id = id;
         this.aerolinea = aerolinea;
@@ -24,7 +26,8 @@ public class Avion implements Serializable{
         vip=new HashMap();
         general=new HashMap();
     }
-
+    /* Getters Y Setters para cada uno de los parametros */
+    
     public String getId() {
         return id;
     }

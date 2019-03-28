@@ -9,17 +9,21 @@ import java.util.HashMap;
 
 /**
  *
- * @author Yonathan Bohorquez
- * @author Manuel Bohorquez
+ * @author Juan Sebastian
+ * 
  */
+
+/*Clase sistema para el manejo de los mapas del avion y de las personas*/
 public class Sistema {
     private HashMap<String,Avion> aviones;
     private HashMap<String,Persona> personas;
     
+/*Metodo sistema para crear los nuevos mapas para los atributo persona y avion*/   
     public Sistema(){
         aviones=new HashMap();
         personas=new HashMap();
     }
+    /* Metodo para el manejo del guardado del archivo */
     
     public void guardarArchivo(HashMap<String, Avion> hmAviones){
         try{
@@ -35,7 +39,7 @@ public class Sistema {
             System.out.println("Error: "+e.getMessage());
         }
     }
-    
+    /* Metodo para el manejo de la lectura del archivo */
     public HashMap leerArchivo(){
         try{
             File toRead=new File("Aerolinea");
@@ -52,7 +56,7 @@ public class Sistema {
         } 
         return aviones;
     }
-    
+    /* Metodo para el manejo del guardado del archivo con los datos y atributos del cliente */
     public void guardarArchivoCliente(HashMap<String, Persona> hmPersonas){
         try{
             File fileOne=new File("Clientes");
@@ -67,7 +71,7 @@ public class Sistema {
             System.out.println("Error: "+e.getMessage());
         }
     }
-    
+    /* Metodo para la lectura del archivo */
     public HashMap leerArchivoCliente(){
         try{
             File toRead=new File("Clientes");

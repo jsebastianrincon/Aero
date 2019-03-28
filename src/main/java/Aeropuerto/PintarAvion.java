@@ -1,14 +1,15 @@
 package Aeropuerto;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  *
- * @author Yonathan Bohorquez
- * @author Manuel Bohorquez
+ * @author Juan Sebastian
  */
+
+
+/* Clase donde se va a realizar el diseño del avion*/
 public class PintarAvion {
     HashMap<String, Avion> avion;
     Sistema sistema = new Sistema();
@@ -16,7 +17,7 @@ public class PintarAvion {
     public PintarAvion(){
         avion = new HashMap();
     }
-    
+ /* Clase donde se va a realizar el diseño del avion especificamnete la clase VIP*/   
     public Double pintarVip(){
         avion = sistema.leerArchivo();
         Double costoVip=0.0;
@@ -38,7 +39,7 @@ public class PintarAvion {
         }
         return costoVip;
     }
-    
+    /* Clase donde se va a realizar el diseño del avion especificamnete la clase Clasica*/
     public Double pintarClasico(){
         avion = sistema.leerArchivo();
         Double costoGeneral=0.0;
@@ -63,7 +64,7 @@ public class PintarAvion {
         }
         return costoGeneral;
     }
-    
+    /* Clase donde se va a realizar el diseño del avion especificamnete la clase Mixta*/
     public Double[] pintarMixto(){
         avion = sistema.leerArchivo();
         Double costoVip=0.0, costoGeneral=0.0;
@@ -98,53 +99,75 @@ public class PintarAvion {
         Double[] costo={costoVip, costoGeneral};
         return costo;
     }
-    
+    /* Clase donde se va a realizar el diseño del avion para mostrar al momento de mostrar y asignar los puestos*/
     public void mostrarAvion(String a,String b,String c,String d,String e){
-        System.out.println("                                       NXXN\n" +
-                "                                      Ko  dK\n" +
-                "                                     K     oK\n" +
-                "                                    Nd      dN\n" +
-                "                                    0        0\n" +
-                "                                    k        k\n" +
-                "                                   Nd        xN\n" +
-                "                                   Xo        dX\n" +
-                "                                   Ko        oK\n" +
-                "                                   Ko        oK\n" +
-                "                                   Ko        oK\n" +
-                "                                   K         oK\n" +
-                "                                   K         K\n" +
-                "                                  Kx         xK\n" +
-                "                               NOd              d0N\n" +
-                "                         XOOOOko                  okOOO0X\n" +
-                "                         k          \033[31m 123456             k\n" +
-                "                        Xd        "+a+"             dK\n" +
-                "                         k        "+b+"             k\n" +
-                "                        Xd                              dK\n" +
-                "                         k------------|  |-------------k\n" +
-                "                        Xd                              dK\n" +
-                "                 Xxlooxd           \033[31m 12345678             ddoolxX\n" +
-                "                 K               "+c+"                   K\n" +
-                "                NO               "+d+"                   ON\n" +
-                "              Xk                 "+e+"                    okX\n" +
-                "           N0x                    xd          dxo                   x0N\n" +
-                "         XOo                 oO0k0 0          0 0kOOd                 oOX\n" +
-                "      N0x              o d0KOK     0          0     KOK0d o              d0N\n" +
-                "    Xko           oddxXNXX         0          0         XKNKxodo           okX\n" +
-                "   Xo         dkxON NN             K         oK             NN NOxkd         oK\n" +
-                "  Nx    odk0O0                     Xd        dX                     KO0kdo    dN\n" +
-                "  Xddk0KN                          Nx        xN                          NK0kdxX\n" +
-                "   N                                O        O                                N\n" +
-                "                                    0        0\n" +
-                "                                    Xo      oX\n" +
-                "                                    Nx      xN\n" +
-                "                                     O      O\n" +
-                "                                     Ko    oK\n" +
-                "                                     Xd    dX\n" +
-                "                                   X0x      dOX\n" +
-                "                                NKxo    00    ox0N\n" +
-                "                               Xx      0000      dX\n" +
-                "                               KdoxkOKX0kk0XKOkxodK\n" +
-                "                                ||     ||||     ||\n\n\n\n");
+        System.out.println("                                                llc\\n\" +\n" +
+"\"                                               lcccl\\n\" +\n" +
+"\"                                              lcccccc\\n\" +\n" +
+"\"                                             ccdcccccc\\n\" +\n" +
+"\"                                             lcccccccl\\n\" +\n" +
+"\"                                            cccccccccl\\n\" +\n" +
+"\"                                            ccccccccccc\\n\" +\n" +
+"\"                                            lcccccccccc\\n\" +\n" +
+"\"                                            lcc    cccl\\n\" +\n" +
+"\"                                            ldl     ldl\\n\" +\n" +
+"\"                                            lc      cdl\\n\" +\n" +
+"\"                                            lc       cl\\n\" +\n" +
+"\"                                            cc       cl\\n\" +\n" +
+"\"                                           ccc       cl\\n\" +\n" +
+"\"                                           ccdc     ldc\\n\" +\n" +
+"\"                                           ccccc   lcccc\\n\" +\n" +
+"\"                                           lccccccdccccl\\n\" +\n" +
+"\"                                          cccccccccccccl\\n\" +\n" +
+"\"                                          ccccccccccccccc\\n\" +\n" +
+"\"                                          ccccccccccccccc\\n\" +\n" +
+"\"                                          ccccccccccccccc\\n\" +\n" +
+"\"                                          ccccccccccccccc\\n\" +\n" +
+"\"                                          lcccccccccccccc\\n\" +\n" +
+"\"                                          lcccccccccccccc\\n\" +\n" +
+"\"                                         clccccccccccccclc\\n\" +\n" +
+"\"                                        cllcccccccccccccllc\\n\" +\n" +
+"\"                                      cllllccccccccccccclllcc\\n\" +\n" +
+"\"                                    cllllllccccccccccccclllllcc\\n\" +\n" +
+"\"                                  ccllll  |"+a+"|     llllcc\\n\" +\n" +
+"\"                                ccllllcl  |"+b+"|     lclllllc\\n\" +\n" +
+"\"                               cllllcccl_______|  |_______llcclllllc\\n\" +\n" +
+"\"                             cllllccllll                  llllcclllllc\\n\" +\n" +
+"\"                           ccllllcllllll |"+c+"|    llllllccllllcc\\n\" +\n" +
+"\"                         ccllllcllllllll |"+d+"|    lllllllllcllllc\\n\" +\n" +
+"\"                        cllllcllllllllll |"+e+"|    llllllllllllllllc\\n\" +\n" +
+"\"                      clllllllllllllllll                  llllllllllllllllllc\\n\" +\n" +
+"\"                    ccllllllllllllllllll                  lllllllllllllllllllcc\\n\" +\n" +
+"\"                  ccllllllllllllllllllll                  lllllllllllllllllllllc\\n\" +\n" +
+"\"                 clllllllllllllllllllllccdddcccccccccccddccclllllllllllllllllllllc\\n\" +\n" +
+"\"               clllllllllllllllllllcccdddddccccccccccccddddddcccllllllllllllllllllcc\\n\" +\n" +
+"\"             cclllllllllllllllllccddddddddddcccccccccccddddddddddcclllllllllllllllllcc\\n\" +\n" +
+"\"            clllllllllllllllccddddddddddddddcccccccccccddddddddddddddcclllllllllllllllc\\n\" +\n" +
+"\"          clllllllllllllcccddddddddddddddddcccccccccccccddddddddddddddddccclllllllllllllc\\n\" +\n" +
+"\"        cclllllllllllccdddddddddddddddccllclccccccccccclcllccdddddddddddddddcclllllllllllc\\n\" +\n" +
+"\"       clllllllllccdddddddddddddddcclcc    ccccccccccccc    cclccdddddddddddddddcclllllllllc\\n\" +\n" +
+"\"      cllllllcccdddddddddddddccllc         ccccccccccccc         cllccdddddddddddddcclllllllc\\n\" +\n" +
+"\"      clllccdddddddddddddcllcc             cccccccccccc              ccllcddddddddddddccclllc\\n\" +\n" +
+"\"      lccdddddddddddcclcc                  cccccccccccl                   cllccdddddddddddccl\\n\" +\n" +
+"\"     ccdddddddddcllc                        ccccccccccl                       ccllcdddddddddc\\n\" +\n" +
+"\"      cddddcclcc                            lcccccccccl                            cclccddddl\\n\" +\n" +
+"\"      lcllc                                 lcccllccccl                                 cllcl\\n\" +\n" +
+"\"                                            lccclllcccl\\n\" +\n" +
+"\"                                            lccclllcccc\\n\" +\n" +
+"\"                                          cclccllllccclcc\\n\" +\n" +
+"\"                                        clllllcllllcclllllc\\n\" +\n" +
+"\"                                     cclllllllcllllcclllllllc\\n\" +\n" +
+"\"                                   cclllllllllcllllcclllllllllcc\\n\" +\n" +
+"\"                                 cclllllllcccdcllllcccccclllllllcc\\n\" +\n" +
+"\"                               ccllllcccddddddcllllccddddddcccllllcc\\n\" +\n" +
+"\"                             cllcccdddcccllllccllllcccllllccddddcccllc\\n\" +\n" +
+"\"                           cccccclllcc       lcllllccl      ccclllcccccc\\n\" +\n" +
+"\"                           ccc               ccllllccc              ccc\\n\" +\n" +
+"\"                                               clllc\\n\" +\n" +
+"\"                                               ldccc\\n\" +\n" +
+"\"                                               cdccc\\n\" +\n" +
+"\"                                               cdclc\\n\" +\n" +
+"\"                                                llc\n\n\n\n");
     }
     
 }

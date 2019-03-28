@@ -5,22 +5,25 @@ import java.util.Date;
 
 /**
  *
- * @author Yonathan Bohorquez
- * @author Manuel Bohorquez
+ * @author Juan Sebastian
  */
+
+/* Clase para guardar los atributos de la clase persona */
 public class Persona implements Serializable{
     private String identificacion;
     private String nombre;
     private String apellido;
     private Date fechaNacimiento;
-
+    
+/* Clase persona para hacer la referenciacion de los parametros */
     public Persona(String identificacion, String nombre, String apellido, Date fechaNacimiento) {
         this.identificacion = identificacion;
         this.nombre = nombre;
         this.apellido = apellido;
         this.fechaNacimiento = fechaNacimiento;
     }
-
+/* Getters Y Setters para cada uno de los parametros */
+    
     public String getIdentificacion() {
         return identificacion;
     }
