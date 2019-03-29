@@ -17,24 +17,28 @@ public class PintarAvion {
     public PintarAvion(){
         avion = new HashMap();
     }
- /* Clase donde se va a realizar el diseño del avion especificamnete la clase VIP*/   
+    /* Clase donde se va a realizar el diseño del avion especificamnete la clase VIP*/
     public Double pintarVip(){
         avion = sistema.leerArchivo();
         Double costoVip=0.0;
         for (Map.Entry<String,Avion> av :avion.entrySet()) {
-            if(avion.get(av.getKey()).getCategoria().equals("VIP")){
-                for (Vip vi : avion.get(av.getKey()).getVip().values()) {
-                    if(vi.getUbicacion().contains("A")){
-                        concatenadoA = concatenadoA + vi.getEstado();
+            if(avion.get(av.getKey()).isEstado()==true){
+                System.out.println("El avión "+av.getKey()+" está en vuelo.");
+            }else{
+                if(avion.get(av.getKey()).getCategoria().equals("VIP")){
+                    for (Vip vi : avion.get(av.getKey()).getVip().values()) {
+                        if(vi.getUbicacion().contains("A")){
+                            concatenadoA = concatenadoA + vi.getEstado();
+                        }
+                        if(vi.getUbicacion().contains("B")){
+                            concatenadoB = concatenadoB + vi.getEstado();
+                        }
+                        costoVip=vi.getPrecio();
                     }
-                    if(vi.getUbicacion().contains("B")){
-                        concatenadoB = concatenadoB + vi.getEstado();
-                    }
-                    costoVip=vi.getPrecio();
+                    mostrarAvion("A->"+concatenadoA, "B->"+concatenadoB, "           ", "           ", "           ");
+                    System.out.println("Id del avion: "+avion.get(av.getKey()).getId());
+                    concatenadoA="";concatenadoB="";
                 }
-                System.out.println("Id del avion: "+avion.get(av.getKey()).getId());
-                mostrarAvion("A->"+concatenadoA, "B->"+concatenadoB, "           ", "           ", "           ");
-                concatenadoA="";concatenadoB="";
             }
         }
         return costoVip;
@@ -44,22 +48,26 @@ public class PintarAvion {
         avion = sistema.leerArchivo();
         Double costoGeneral=0.0;
         for (Map.Entry<String,Avion> av :avion.entrySet()) {
-            if(avion.get(av.getKey()).getCategoria().equals("Genereal")){
-                for (General general : avion.get(av.getKey()).getGeneral().values()) {
-                    if(general.getUbicacion().contains("C")){
-                        concatenadoC = concatenadoC + general.getEstado();
+            if(avion.get(av.getKey()).isEstado()==true){
+                System.out.println("El avión "+av.getKey()+" está en vuelo.");
+            }else{
+                if(avion.get(av.getKey()).getCategoria().equals("Genereal")){
+                    for (General general : avion.get(av.getKey()).getGeneral().values()) {
+                        if(general.getUbicacion().contains("C")){
+                            concatenadoC = concatenadoC + general.getEstado();
+                        }
+                        if(general.getUbicacion().contains("D")){
+                            concatenadoD = concatenadoD + general.getEstado();
+                        }
+                        if(general.getUbicacion().contains("E")){
+                            concatenadoE = concatenadoE + general.getEstado();
+                        }
+                        costoGeneral=general.getPrecio();
                     }
-                    if(general.getUbicacion().contains("D")){
-                        concatenadoD = concatenadoD + general.getEstado();
-                    }
-                    if(general.getUbicacion().contains("E")){
-                        concatenadoE = concatenadoE + general.getEstado();
-                    }
-                    costoGeneral=general.getPrecio();
+                    mostrarAvion("         ", "         ", "C->"+concatenadoC, "D->"+concatenadoD, "E->"+concatenadoE);
+                    concatenadoC="";concatenadoD="";concatenadoE="";
+                    System.out.println("Id del avion: "+avion.get(av.getKey()).getId());
                 }
-                System.out.println("Id del avion: "+avion.get(av.getKey()).getId());
-                mostrarAvion("         ", "         ", "C->"+concatenadoC, "D->"+concatenadoD, "E->"+concatenadoE);
-                concatenadoC="";concatenadoD="";concatenadoE="";
             }
         }
         return costoGeneral;
@@ -69,105 +77,110 @@ public class PintarAvion {
         avion = sistema.leerArchivo();
         Double costoVip=0.0, costoGeneral=0.0;
         for (Map.Entry<String,Avion> av :avion.entrySet()) {
-            if(avion.get(av.getKey()).getCategoria().equals("Mixto")){
-                for (Vip vi : avion.get(av.getKey()).getVip().values()) {
-                    if(vi.getUbicacion().contains("A")){
-                        concatenadoA = concatenadoA + vi.getEstado();
+            if(avion.get(av.getKey()).isEstado()==true){
+                System.out.println("El avión "+av.getKey()+" está en vuelo.");
+            }else{
+                if(avion.get(av.getKey()).getCategoria().equals("Mixto")){
+                    for (Vip vi : avion.get(av.getKey()).getVip().values()) {
+                        if(vi.getUbicacion().contains("A")){
+                            concatenadoA = concatenadoA + vi.getEstado();
+                        }
+                        if(vi.getUbicacion().contains("B")){
+                            concatenadoB = concatenadoB + vi.getEstado();
+                        }
+                        costoVip=vi.getPrecio();
                     }
-                    if(vi.getUbicacion().contains("B")){
-                        concatenadoB = concatenadoB + vi.getEstado();
+                    for (General general : avion.get(av.getKey()).getGeneral().values()) {
+                        if(general.getUbicacion().contains("C")){
+                            concatenadoC = concatenadoC + general.getEstado();
+                        }
+                        if(general.getUbicacion().contains("D")){
+                            concatenadoD = concatenadoD + general.getEstado();
+                        }
+                        if(general.getUbicacion().contains("E")){
+                            concatenadoE = concatenadoE + general.getEstado();
+                        }
+                        costoGeneral=general.getPrecio();
                     }
-                    costoVip=vi.getPrecio();
+                    mostrarAvion("A->"+concatenadoA, "B->"+concatenadoB, "C->"+concatenadoC, "D->"+concatenadoD, "E->"+concatenadoE);
+                    concatenadoA="";concatenadoB="";concatenadoC="";concatenadoD="";concatenadoE="";
+                    System.out.println("Id del avion: "+avion.get(av.getKey()).getId());
                 }
-                for (General general : avion.get(av.getKey()).getGeneral().values()) {
-                    if(general.getUbicacion().contains("C")){
-                        concatenadoC = concatenadoC + general.getEstado();
-                    }
-                    if(general.getUbicacion().contains("D")){
-                        concatenadoD = concatenadoD + general.getEstado();
-                    }
-                    if(general.getUbicacion().contains("E")){
-                        concatenadoE = concatenadoE + general.getEstado();
-                    }
-                    costoGeneral=general.getPrecio();
-                }
-                System.out.println("Id del avion: "+avion.get(av.getKey()).getId());
-                mostrarAvion("A->"+concatenadoA, "B->"+concatenadoB, "C->"+concatenadoC, "D->"+concatenadoD, "E->"+concatenadoE);
-                concatenadoA="";concatenadoB="";concatenadoC="";concatenadoD="";concatenadoE="";
             }
+            
         }
         Double[] costo={costoVip, costoGeneral};
         return costo;
     }
     /* Clase donde se va a realizar el diseño del avion para mostrar al momento de mostrar y asignar los puestos*/
     public void mostrarAvion(String a,String b,String c,String d,String e){
-        System.out.println("                                                llc\\n\" +\n" +
-"\"                                               lcccl\\n\" +\n" +
-"\"                                              lcccccc\\n\" +\n" +
-"\"                                             ccdcccccc\\n\" +\n" +
-"\"                                             lcccccccl\\n\" +\n" +
-"\"                                            cccccccccl\\n\" +\n" +
-"\"                                            ccccccccccc\\n\" +\n" +
-"\"                                            lcccccccccc\\n\" +\n" +
-"\"                                            lcc    cccl\\n\" +\n" +
-"\"                                            ldl     ldl\\n\" +\n" +
-"\"                                            lc      cdl\\n\" +\n" +
-"\"                                            lc       cl\\n\" +\n" +
-"\"                                            cc       cl\\n\" +\n" +
-"\"                                           ccc       cl\\n\" +\n" +
-"\"                                           ccdc     ldc\\n\" +\n" +
-"\"                                           ccccc   lcccc\\n\" +\n" +
-"\"                                           lccccccdccccl\\n\" +\n" +
-"\"                                          cccccccccccccl\\n\" +\n" +
-"\"                                          ccccccccccccccc\\n\" +\n" +
-"\"                                          ccccccccccccccc\\n\" +\n" +
-"\"                                          ccccccccccccccc\\n\" +\n" +
-"\"                                          ccccccccccccccc\\n\" +\n" +
-"\"                                          lcccccccccccccc\\n\" +\n" +
-"\"                                          lcccccccccccccc\\n\" +\n" +
-"\"                                         clccccccccccccclc\\n\" +\n" +
-"\"                                        cllcccccccccccccllc\\n\" +\n" +
-"\"                                      cllllccccccccccccclllcc\\n\" +\n" +
-"\"                                    cllllllccccccccccccclllllcc\\n\" +\n" +
-"\"                                  ccllll  |"+a+"|     llllcc\\n\" +\n" +
-"\"                                ccllllcl  |"+b+"|     lclllllc\\n\" +\n" +
-"\"                               cllllcccl_______|  |_______llcclllllc\\n\" +\n" +
-"\"                             cllllccllll                  llllcclllllc\\n\" +\n" +
-"\"                           ccllllcllllll |"+c+"|    llllllccllllcc\\n\" +\n" +
-"\"                         ccllllcllllllll |"+d+"|    lllllllllcllllc\\n\" +\n" +
-"\"                        cllllcllllllllll |"+e+"|    llllllllllllllllc\\n\" +\n" +
-"\"                      clllllllllllllllll                  llllllllllllllllllc\\n\" +\n" +
-"\"                    ccllllllllllllllllll                  lllllllllllllllllllcc\\n\" +\n" +
-"\"                  ccllllllllllllllllllll                  lllllllllllllllllllllc\\n\" +\n" +
-"\"                 clllllllllllllllllllllccdddcccccccccccddccclllllllllllllllllllllc\\n\" +\n" +
-"\"               clllllllllllllllllllcccdddddccccccccccccddddddcccllllllllllllllllllcc\\n\" +\n" +
-"\"             cclllllllllllllllllccddddddddddcccccccccccddddddddddcclllllllllllllllllcc\\n\" +\n" +
-"\"            clllllllllllllllccddddddddddddddcccccccccccddddddddddddddcclllllllllllllllc\\n\" +\n" +
-"\"          clllllllllllllcccddddddddddddddddcccccccccccccddddddddddddddddccclllllllllllllc\\n\" +\n" +
-"\"        cclllllllllllccdddddddddddddddccllclccccccccccclcllccdddddddddddddddcclllllllllllc\\n\" +\n" +
-"\"       clllllllllccdddddddddddddddcclcc    ccccccccccccc    cclccdddddddddddddddcclllllllllc\\n\" +\n" +
-"\"      cllllllcccdddddddddddddccllc         ccccccccccccc         cllccdddddddddddddcclllllllc\\n\" +\n" +
-"\"      clllccdddddddddddddcllcc             cccccccccccc              ccllcddddddddddddccclllc\\n\" +\n" +
-"\"      lccdddddddddddcclcc                  cccccccccccl                   cllccdddddddddddccl\\n\" +\n" +
-"\"     ccdddddddddcllc                        ccccccccccl                       ccllcdddddddddc\\n\" +\n" +
-"\"      cddddcclcc                            lcccccccccl                            cclccddddl\\n\" +\n" +
-"\"      lcllc                                 lcccllccccl                                 cllcl\\n\" +\n" +
-"\"                                            lccclllcccl\\n\" +\n" +
-"\"                                            lccclllcccc\\n\" +\n" +
-"\"                                          cclccllllccclcc\\n\" +\n" +
-"\"                                        clllllcllllcclllllc\\n\" +\n" +
-"\"                                     cclllllllcllllcclllllllc\\n\" +\n" +
-"\"                                   cclllllllllcllllcclllllllllcc\\n\" +\n" +
-"\"                                 cclllllllcccdcllllcccccclllllllcc\\n\" +\n" +
-"\"                               ccllllcccddddddcllllccddddddcccllllcc\\n\" +\n" +
-"\"                             cllcccdddcccllllccllllcccllllccddddcccllc\\n\" +\n" +
-"\"                           cccccclllcc       lcllllccl      ccclllcccccc\\n\" +\n" +
-"\"                           ccc               ccllllccc              ccc\\n\" +\n" +
-"\"                                               clllc\\n\" +\n" +
-"\"                                               ldccc\\n\" +\n" +
-"\"                                               cdccc\\n\" +\n" +
-"\"                                               cdclc\\n\" +\n" +
-"\"                                                llc\n\n\n\n");
+        System.out.println("\n\n\n\n                                                llc\n" +
+"                                               lcccln\n" +
+"                                              lccccccln\n" +
+"                                             ccdcccccclln\n" +
+"                                             lcccccccccln\n" +
+"                                            ccccccccclccc\n" +
+"                                            cccccccccccccc\n" +
+"                                            lccccccccccccl\n" +
+"                                            lcccc     ccccl\n" +
+"                                            ldlcc     ccldl\n" +
+"                                            lccc       cccl\n" +
+"                                            lccc       cccl\n" +
+"                                            cccc       cccl\n" +
+"                                           ccccc       ccccc\n" +
+"                                           ccdccc     cccdcc\n" +
+"                                           ccccccc   lcccccc\n" +
+"                                           lccccccdccccccccl\n" +
+"                                          ccccccccccccccccccl\n" +
+"                                          ccccccccccccccccccc\n" +
+"                                          ccccccccccccccccccc\n" +
+"                                          ccccccccccccccccccc\n" +
+"                                          ccccccccccccccccccc\n" +
+"                                          lcccccccccccccccccl\n" +
+"                                          lcccccccccccccccccl\n" +
+"                                         clccccccccccccccccclc\n" +
+"                                        cllcccccccccccccccccllc\n" +
+"                                      cllllcccccccccccccccccllllc\n" +
+"                                    cllllllcccccccccccccccccllllllc\n" +
+"                                  ccllll     |"+a+"|      llllcc\n" +
+"                                ccllllcl     |"+b+"|      lcllllcc\n" +
+"                               cllllcccl________|  |________llcclllllc\n" +
+"                             cllllccllll                    llllccllllc\n" +
+"                           ccllllcllllll  |"+c+"|     llllllcllllcc\n" +
+"                         ccllllcllllllll  |"+d+"|     llllllllcllllc\n" +
+"                        cllllcllllllllll  |"+e+"|     lllllllllllllllc\n" +
+"                      clllllllllllllllll                    lllllllllllllllllc\n" +
+"                    ccllllllllllllllllll                    lllllllllllllllll1cc\n" +
+"                  ccllllllllllllllllllll                    llllllllllllllllllllcc\n" +
+"                 clllllllllllllllllllllccdddcccccccccccddcccllllllllllllllllllll1lc\n" +
+"               clllllllllllllllllllcccdddddccccccccccccddddddcccllllllllllllllllll11c\n" +
+"             cclllllllllllllllllccddddddddddcccccccccccddddddddddcclllllllllllllllll1cc\n" +
+"            clllllllllllllllccddddddddddddddcccccccccccddddddddddddddccllllllllllllll1lc\n" +
+"          clllllllllllllcccddddddddddddddddcccccccccccccddddddddddddddddccclllllllllllll1c\n" +
+"        cclllllllllllccdddddddddddddddccllclccccccccccclcllccdddddddddddddddcclllllllllll1cc\n" +
+"       clllllllllccdddddddddddddddcclcc    ccccccccccccc    cclccdddddddddddddddcclllllllll1c\n" +
+"      cllllllcccdddddddddddddccllc         ccccccccccccc         cllccdddddddddddddcclllllll1c\n" +
+"      clllccdddddddddddddcllcc             cccccccccccc              ccllcddddddddddddccclll1c\n" +
+"      lccdddddddddddcclcc                  cccccccccccl                   cllccddddddddddddccl\n" +
+"     ccdddddddddcllc                        ccccccccccl                       ccllcddddddddddcc\n" +
+"      cddddcclcc                            lcccccccccl                            cclccddddcl\n" +
+"      lcllc                                 lcccllccccl                                  cllcl\n" +
+"                                            lccclllcccl\n" +
+"                                            lccclllcccc\n" +
+"                                          cclccllllccclcc\n" +
+"                                        clllllcllllcclllllc\n" +
+"                                     cclllllllcllllcclllllllc\n" +
+"                                   cclllllllllcllllcclllllllllcc\n" +
+"                                 cclllllllcccdcllllcccccclllllllcc\n" +
+"                               ccllllcccddddddcllllccddddddcccllllcc\n" +
+"                             cllcccdddcccllllccllllcccllllccddddcccllc\n" +
+"                           cccccclllcc       lcllllccl      ccclllcccccc\n" +
+"                           ccc               ccllllccc              ccc\n" +
+"                                               clllc\n" +
+"                                               ldccc\n" +
+"                                               cdccc\n" +
+"                                               cdclc\n" +
+"                                                llc");
     }
     
 }

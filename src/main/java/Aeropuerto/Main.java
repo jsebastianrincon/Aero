@@ -1,6 +1,5 @@
 package Aeropuerto;
 
-
 /**
  *
  * @author Juan Sebastian

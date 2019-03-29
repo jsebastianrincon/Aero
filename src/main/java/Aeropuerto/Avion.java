@@ -14,15 +14,17 @@ public class Avion implements Serializable{
     private String aerolinea;
     private String categoria;
     private Double ingreso;
+    private boolean estado;
     HashMap<String,Vip>vip;
     HashMap<String,General>general;
 
     /* Clase avion para hacer la referenciacion de los parametros */
-    public Avion(String id, String aerolinea, String categoria, Double ingreso) {
+    public Avion(String id, String aerolinea, String categoria, Double ingreso, boolean estado) {
         this.id = id;
         this.aerolinea = aerolinea;
         this.categoria = categoria;
         this.ingreso = ingreso;
+        this.estado = estado;
         vip=new HashMap();
         general=new HashMap();
     }
@@ -58,6 +60,14 @@ public class Avion implements Serializable{
 
     public void setIngreso(Double ingreso) {
         this.ingreso = ingreso;
+    }
+
+    public boolean isEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
     }
 
     public HashMap<String, Vip> getVip() {

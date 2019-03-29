@@ -21,8 +21,8 @@ public class Principal implements Serializable{
     public BufferedReader entradaDatos=new BufferedReader(new InputStreamReader (System.in));
     private HashMap<String,Avion> aviones;
     private HashMap<String,Persona> personas;
-    Double acumulado=0.0;
     Sistema sistema = new Sistema();
+    PintarAvion pintar = new PintarAvion();
     public Principal(){
         aviones=new HashMap();
         personas=new HashMap();
@@ -115,7 +115,7 @@ public class Principal implements Serializable{
                 boolean esDouble;
                 switch(categoria){
                     case"1":
-                        avion=new Avion(idAvion, aerolinea, "VIP", 0.0);
+                        avion=new Avion(idAvion, aerolinea, "VIP", 0.0, false);
                         aviones.put(idAvion, avion);
                         String idSilla="";
                         esDouble=false;
@@ -140,7 +140,7 @@ public class Principal implements Serializable{
                         }while(!esDouble);
                         break;
                     case"2":
-                        avion=new Avion(idAvion, aerolinea, "General", 0.0);
+                        avion=new Avion(idAvion, aerolinea, "General", 0.0, false);
                         aviones.put(idAvion, avion);
                         esDouble=false;
                         do{
@@ -168,7 +168,7 @@ public class Principal implements Serializable{
                         }while(!esDouble);
                         break;
                     case"3":
-                        avion=new Avion(idAvion, aerolinea, "Mixto", 0.0);
+                        avion=new Avion(idAvion, aerolinea, "Mixto", 0.0, false);
                         aviones.put(idAvion, avion);
                         esDouble=false;
                         do{
@@ -240,46 +240,61 @@ public class Principal implements Serializable{
     
     //Metodo para realizar la venta del tiquete.
     public void venderTiquete(String id){
-        PintarAvion pintar = new PintarAvion();
         try{
             String categoria="";
             personas = sistema.leerArchivoCliente();
             if(personas.containsKey(id)){
+                boolean vendido=false;
+                Double costoVip=0.0, costoGeneral=0.0;
                 do{
-                    
                     System.out.println("Categoría");
                     System.out.println("1.VIP");
                     System.out.println("2.General");
                     System.out.println("3.Mixto");
                     categoria=entradaDatos.readLine();
-                    Double costoVip=0.0, costoGeneral=0.0;
+                    
                     switch(categoria){
                         case"1":
                             costoVip=pintar.pintarVip();
-                            System.out.println("Precio puesto VIP $"+costoVip);
-                            compraCliente(id, costoVip, 0.0);
-                            pintar.pintarVip();
+                            if(costoVip==0.0){
+                                vendido=false;
+                                System.out.println("No hay Aviones VIP en el sistema.");
+                            }else{
+                                System.out.println("Precio puesto VIP $"+costoVip);
+                                compraCliente(id, costoVip, 0.0);
+                                vendido=true;
+                            }
                             break;
                         case"2":
                             costoGeneral=pintar.pintarClasico();
-                            System.out.println("Precio puesto General"+costoGeneral);
-                            compraCliente(id, 0.0, costoGeneral);
-                            pintar.pintarClasico();
+                            if(costoGeneral==0.0){
+                                vendido=false;
+                                System.out.println("No hay Aviones General en el sistema.");
+                            }else{
+                                System.out.println("Precio puesto General"+costoGeneral);
+                                compraCliente(id, 0.0, costoGeneral);
+                                vendido=true;
+                            }
                             break;
                         case"3":
                             Double[] costo = pintar.pintarMixto();
                             costoVip=costo[0];
                             costoGeneral=costo[1];
-                            System.out.println("Precio puesto VIP"+costoVip);
-                            System.out.println("Precio puesto General"+costoGeneral);
-                            compraCliente(id, costoVip, costoGeneral);
-                            pintar.pintarMixto();
+                            if(costoVip==0.0 || costoGeneral==0.0){
+                                vendido=false;
+                                System.out.println("No hay Aviones Mixtos en el sistema.");
+                            }else{
+                                System.out.println("Precio puesto VIP "+costoVip);
+                                System.out.println("Precio puesto General "+costoGeneral);
+                                compraCliente(id, costoVip, costoGeneral);
+                                vendido=true;
+                            }
                             break;
                         default:
                             System.out.println("Opcion invalida");
                             break;
                     }
-                }while(!(categoria.equals("1") || categoria.equals("2") || categoria.equals("3")));
+                }while((!(categoria.equals("1") || categoria.equals("2") || categoria.equals("3"))) || vendido==false);
             }else{
                 System.out.println("Cliente inexistente");
                 System.out.println("Desea registrar el cliente nuevo "+id+"? (s/n)");
@@ -336,36 +351,48 @@ public class Principal implements Serializable{
         aviones = sistema.leerArchivo();
         for(Map.Entry<String,Avion> m :aviones.entrySet()){
             int vip=0, ocupadoVip=0, eco=0, ocupadoEco=0;
-            System.out.println("Avion: "+m.getKey()+" : "+m.getValue().getAerolinea());
-            for (Vip s : aviones.get(m.getKey()).getVip().values()) {
-                if(s.getEstado().equals("O")){
-                    vip++;
-                    estado="Vacío";
-                }else if(s.getEstado().equals("X")){
-                    ocupadoVip++;
-                    estado = "Ocupado";
+            System.out.println("Codigo Avion: "+m.getKey()+" : Aerolinea: "+m.getValue().getAerolinea());
+            if(aviones.get(m.getKey()).isEstado()==true){
+                System.out.println("Ya está en vuelo.");
+            }else{
+                for (Vip s : aviones.get(m.getKey()).getVip().values()) {
+                    if(s.getEstado().equals("O")){
+                        vip++;
+                        estado="Vacío";
+                    }else if(s.getEstado().equals("X")){
+                        ocupadoVip++;
+                        estado = "Ocupado";
+                    }
+                }
+                int cantidadVip = vip+=ocupadoVip;
+                if(cantidadVip>0){
+                    System.out.println("Sillas VIP");
+                    System.out.println("\tOcupado: "+ocupadoVip);
+                    System.out.println("\tLibre: "+vip);
+                }
+                for (General s : aviones.get(m.getKey()).getGeneral().values()) {
+                    if(s.getEstado().equals("o")){
+                        eco++;
+                        estado="Vacío";
+                    }else if(s.getEstado().equals("x")){
+                        ocupadoEco++;
+                        estado = "Ocupado";
+                    }
+                }
+                int cantidadEco=eco+=ocupadoEco;
+                if(cantidadEco>0){
+                    System.out.println("Sillas General");
+                    System.out.println("\tOcupado: "+ocupadoEco);
+                    System.out.println("\tLibre: "+eco);
                 }
             }
-            vip+=ocupadoVip;
-            System.out.println("\t"+ocupadoVip+" Sillas VIP ocupadas de "+vip);
-            for (General s : aviones.get(m.getKey()).getGeneral().values()) {
-                if(s.getEstado().equals("o")){
-                    eco++;
-                    estado="Vacío";
-                }else if(s.getEstado().equals("x")){
-                    ocupadoEco++;
-                    estado = "Ocupado";
-                }
-            }
-            eco+=ocupadoEco;
-            System.out.println("\t"+ocupadoEco+" Sillas General ocupadas de "+eco);
         }
     }
     
     //Metodo donde se efectúa la venta.
     public void compraCliente(String idCliente, Double costoVip, Double costoGeneral) {
         try{
-            if(aviones.isEmpty()){
+            if(aviones.isEmpty() ){
                 System.out.println("No hay aviones registrados");
             }else{
                 boolean existe=false, ocupado=false;
@@ -377,6 +404,7 @@ public class Principal implements Serializable{
                     String apellido = personas.get(idCliente).getApellido();
                     Date fechaN = personas.get(idCliente).getFechaNacimiento();
                     if(aviones.containsKey(idAvion)){
+                        Double acumulado=0.0;
                         existe=true;
                         String silla="";
                         do{
@@ -392,6 +420,7 @@ public class Principal implements Serializable{
                                     acumulado=acumulado+costoVip;
                                     aviones.get(idAvion).setIngreso(acumulado);
                                     sistema.guardarArchivo(aviones);
+                                    pintar.pintarMixto();
                                     System.out.println("Venta VIP correcta");
                                 }else{
                                     ocupado=false;
@@ -407,6 +436,7 @@ public class Principal implements Serializable{
                                     acumulado=acumulado+costoGeneral;
                                     aviones.get(idAvion).setIngreso(acumulado);
                                     sistema.guardarArchivo(aviones);
+                                    pintar.pintarMixto();
                                     System.out.println("Venta General correcta");
                                 }
                                 else{
@@ -453,7 +483,7 @@ public class Principal implements Serializable{
                             }
                         }
                         System.out.println("Ingresos del avion:  $"+aviones.get(idAvion).getIngreso()+" pesos");
-                        aviones.remove(idAvion);
+                        aviones.get(idAvion).setEstado(true);
                         sistema.guardarArchivo(aviones);
                         despego=true;
                         System.out.println("Despegó.");
@@ -470,7 +500,7 @@ public class Principal implements Serializable{
                             }
                         }
                         System.out.println("Ingresos del avion:  $"+aviones.get(idAvion).getIngreso()+" pesos");
-                        aviones.remove(idAvion);
+                        aviones.get(idAvion).setEstado(true);
                         sistema.guardarArchivo(aviones);
                         despego=true;
                         System.out.println("Despegó.");
@@ -498,7 +528,7 @@ public class Principal implements Serializable{
                             }
                         }
                         System.out.println("Ingresos del avion es $"+aviones.get(idAvion).getIngreso()+" pesos");
-                        aviones.remove(idAvion);
+                        aviones.get(idAvion).setEstado(true);
                         sistema.guardarArchivo(aviones);
                         despego=true;
                         System.out.println("Despegó.");

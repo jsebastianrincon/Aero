@@ -27,7 +27,7 @@ public class Sistema {
     
     public void guardarArchivo(HashMap<String, Avion> hmAviones){
         try{
-            File fileOne=new File("Aerolinea");
+            File fileOne=new File("Archivos/Aerolinea");
             FileOutputStream fos=new FileOutputStream(fileOne);
             ObjectOutputStream oos=new ObjectOutputStream(fos);
             
@@ -42,7 +42,7 @@ public class Sistema {
     /* Metodo para el manejo de la lectura del archivo */
     public HashMap leerArchivo(){
         try{
-            File toRead=new File("Aerolinea");
+            File toRead=new File("Archivos/Aerolinea");
             FileInputStream fis=new FileInputStream(toRead);
             ObjectInputStream ois=new ObjectInputStream(fis);
             
@@ -59,7 +59,7 @@ public class Sistema {
     /* Metodo para el manejo del guardado del archivo con los datos y atributos del cliente */
     public void guardarArchivoCliente(HashMap<String, Persona> hmPersonas){
         try{
-            File fileOne=new File("Clientes");
+            File fileOne=new File("Archivos/Clientes");
             FileOutputStream fos=new FileOutputStream(fileOne);
             ObjectOutputStream oos=new ObjectOutputStream(fos);
             
@@ -74,7 +74,7 @@ public class Sistema {
     /* Metodo para la lectura del archivo */
     public HashMap leerArchivoCliente(){
         try{
-            File toRead=new File("Clientes");
+            File toRead=new File("Archivos/Clientes");
             FileInputStream fis=new FileInputStream(toRead);
             ObjectInputStream ois=new ObjectInputStream(fis);
             
